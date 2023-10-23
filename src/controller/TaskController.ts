@@ -24,6 +24,19 @@ export const getById = async (req: Request, res: Response) => {
   }
 }
 
+export const startWith = async (req: Request, res: Response) => {
+  const { task } = req.body
+  try{
+    const searchTodos = await Todos.find({
+      task: { $regex:'^' + task, $options: 'i'}
+    });
+    res.status(202).json(searchTodos)
+  }
+  catch(err) {
+    res.status(404).json({ error: err })
+  }
+}
+
 
 //CREATE
 export const createTodo = async (req: Request, res: Response) => {
