@@ -62,6 +62,17 @@ var getById = async (req, res) => {
     res.status(404).json({ error: err });
   }
 };
+var startWith = async (req, res) => {
+  const { task } = req.body;
+  try {
+    const searchTodos = await Task_default.find({
+      task: { $regex: "^" + task, $options: "i" }
+    });
+    res.status(202).json(searchTodos);
+  } catch (err) {
+    res.status(404).json({ error: err });
+  }
+};
 var createTodo = async (req, res) => {
   const { task } = req.body;
   try {
@@ -116,6 +127,7 @@ var deleteTodo = async (req, res) => {
 var routes = (0, import_express.Router)();
 routes.get("/", getAll);
 routes.get("/todo/:id", getById);
+routes.get("/search", startWith);
 routes.post("/create", createTodo);
 routes.put("/todo/check/:id", checkTodo);
 routes.put("/todo/update/:id", updateTodo);

@@ -25,6 +25,7 @@ __export(TaskController_exports, {
   deleteTodo: () => deleteTodo,
   getAll: () => getAll,
   getById: () => getById,
+  startWith: () => startWith,
   updateTodo: () => updateTodo
 });
 module.exports = __toCommonJS(TaskController_exports);
@@ -62,6 +63,17 @@ var getById = async (req, res) => {
   try {
     const todo = await Task_default.findById(id);
     res.status(202).json(todo);
+  } catch (err) {
+    res.status(404).json({ error: err });
+  }
+};
+var startWith = async (req, res) => {
+  const { task } = req.body;
+  try {
+    const searchTodos = await Task_default.find({
+      task: { $regex: "^" + task, $options: "i" }
+    });
+    res.status(202).json(searchTodos);
   } catch (err) {
     res.status(404).json({ error: err });
   }
@@ -122,5 +134,6 @@ var deleteTodo = async (req, res) => {
   deleteTodo,
   getAll,
   getById,
+  startWith,
   updateTodo
 });
