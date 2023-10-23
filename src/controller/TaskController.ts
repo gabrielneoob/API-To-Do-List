@@ -43,11 +43,10 @@ export const createTodo = async (req: Request, res: Response) => {
 //PUT
 export const checkTodo = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { check } = req.body
   try{
     const currentTodo = await Todos.findByIdAndUpdate(id);
     if(currentTodo) {
-      currentTodo.check = check;
+      currentTodo.check ? currentTodo.check = false : currentTodo.check = true
       currentTodo.save();
       res.status(202).json(currentTodo)
     }
