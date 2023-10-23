@@ -4,18 +4,17 @@ import cors from 'cors'
 import database from './database/mongo';
 import routes from './routes/routes'
 
-dotenv.config()
-
-const server = express();
+dotenv.config();
 
 database();
 
-server.use(routes);
+const server = express();
 
 server.use(express.urlencoded({ extended: true }));
 
 server.use(cors());
- 
+
+server.use(routes);
 server.use((req: Request, res: Response) => {
   res.status(404);
   res.json({ error: "Endpoint not find" });
