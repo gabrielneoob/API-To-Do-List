@@ -1,8 +1,8 @@
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors'
-import database from './database/mongo';
-import routes from './routes/routes'
+import database from './src/database/mongo';
+import routes from './src/routes/routes'
 
 dotenv.config();
 
