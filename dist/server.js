@@ -147,7 +147,7 @@ var deleteTodo = async (req, res) => {
 var routes = (0, import_express.Router)();
 routes.get("/", getAll);
 routes.get("/todo/:id", getById);
-routes.get("/search", startWith);
+routes.post("/search", startWith);
 routes.post("/create", createTodo);
 routes.put("/todo/check/:id", checkTodo);
 routes.put("/todo/update/:id", updateTodo);
