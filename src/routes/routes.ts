@@ -5,6 +5,7 @@ const routes = Router();
 
 routes.get('/', TaskController.getAll);
 routes.get('/todo/:id', TaskController.getById);
+routes.post('/todo/:filter', TaskController.getByFilter);
 
 routes.post('/search', TaskController.startWith);
 routes.post('/create', TaskController.createTodo);

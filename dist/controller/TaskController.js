@@ -24,6 +24,7 @@ __export(TaskController_exports, {
   createTodo: () => createTodo,
   deleteTodo: () => deleteTodo,
   getAll: () => getAll,
+  getByFilter: () => getByFilter,
   getById: () => getById,
   startWith: () => startWith,
   updateTodo: () => updateTodo
@@ -53,6 +54,25 @@ var Task_default = import_mongoose.connection && import_mongoose.connection.mode
 var getAll = async (req, res) => {
   try {
     const todos = await Task_default.find();
+    res.status(202).json(todos);
+  } catch (err) {
+    res.status(404).json({ error: err });
+  }
+};
+var getByFilter = async (req, res) => {
+  const { filter } = req.params;
+  if (filter === "all")
+    return res.json({ all: true });
+  let val = false;
+  console.log(filter);
+  if (filter === "done")
+    val = true;
+  if (filter === "undone")
+    val = false;
+  try {
+    const todos = await Task_default.find({
+      check: val
+    });
     res.status(202).json(todos);
   } catch (err) {
     res.status(404).json({ error: err });
@@ -133,6 +153,7 @@ var deleteTodo = async (req, res) => {
   createTodo,
   deleteTodo,
   getAll,
+  getByFilter,
   getById,
   startWith,
   updateTodo

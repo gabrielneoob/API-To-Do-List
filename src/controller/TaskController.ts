@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, json } from "express";
 import Todos from '../models/Task'
 
 
@@ -11,6 +11,26 @@ export const getAll = async (req: Request, res: Response) => {
   catch(err) {
     res.status(404).json({ error: err })
   }
+}
+
+export const getByFilter = async (req: Request, res: Response) => {
+  const { filter } = req.params;
+  if(filter === "all") return res.json({ all: true});
+  let val = false;
+  console.log(filter);
+  if(filter === "done") val = true;
+  if(filter === "undone") val = false;
+  
+  try {
+    const todos = await Todos.find({
+      check: val
+    })
+    res.status(202).json(todos)
+  }
+  catch(err) {
+    res.status(404).json({ error: err })
+  }
+  
 }
 
 export const getById = async (req: Request, res: Response) => {

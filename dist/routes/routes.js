@@ -53,6 +53,25 @@ var getAll = async (req, res) => {
     res.status(404).json({ error: err });
   }
 };
+var getByFilter = async (req, res) => {
+  const { filter } = req.params;
+  if (filter === "all")
+    return res.json({ all: true });
+  let val = false;
+  console.log(filter);
+  if (filter === "done")
+    val = true;
+  if (filter === "undone")
+    val = false;
+  try {
+    const todos = await Task_default.find({
+      check: val
+    });
+    res.status(202).json(todos);
+  } catch (err) {
+    res.status(404).json({ error: err });
+  }
+};
 var getById = async (req, res) => {
   const { id } = req.params;
   try {
@@ -127,6 +146,7 @@ var deleteTodo = async (req, res) => {
 var routes = (0, import_express.Router)();
 routes.get("/", getAll);
 routes.get("/todo/:id", getById);
+routes.post("/todo/:filter", getByFilter);
 routes.post("/search", startWith);
 routes.post("/create", createTodo);
 routes.put("/todo/check/:id", checkTodo);
