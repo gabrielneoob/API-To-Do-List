@@ -21,6 +21,6 @@ server.use((req: Request, res: Response) => {
 })
 
 
-server.listen(process.env.PORT, () => {
-  console.log(`Servidor rodando em: http://localhost:${process.env.PORT}`)
+server.listen('3000', () => {
+  console.log(`Servidor rodando em: http://localhost:3000`)
 });
